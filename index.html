@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Starvite</title></head><body>
+<title>Starvite</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&family=DM+Sans:wght@400;500;600&family=Fredoka:wght@500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Caveat:wght@600;700&family=Bebas+Neue&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<div class="bg" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div><canvas id="sky"></canvas><div class="pl p-saturn"><i class="pr-back"></i><i class="pr-body"></i><i class="pr-front"></i></div><div class="pl p-earth"><i class="pe-body"></i></div><div class="pl p-mars"><i class="pm-body"></i></div><div class="moon"></div><div class="bg-fx" id="bgfx"></div><div class="grain"></div></div>
+<div class="shell" id="shell" data-tab="acara">
+  <header class="top">
+    <h1 class="brand">Starvite</h1>
+    <span class="role-badge" id="roleBadge" hidden>Mode pemilik</span>
+    <p class="tag">Undangan digital untuk semua jenis acara</p>
+  </header>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+  <nav class="tabs" role="tablist" aria-label="Langkah">
+    <button class="tab" role="tab" data-tab="acara" aria-selected="true"><span class="n">1</span>Acara</button>
+    <button class="tab" role="tab" data-tab="tampilan" aria-selected="false"><span class="n">2</span>Tampilan</button>
+    <button class="tab" role="tab" data-tab="kirim" aria-selected="false"><span class="n">3</span>Kirim</button>
+    <button class="tab tab-preview" role="tab" data-tab="preview" aria-selected="false">Pratinjau</button>
+  </nav>
+
+  <main class="work">
+    <section class="panel" data-panel="acara" aria-label="Detail acara">
+      <h2 class="sec">Jenis acara</h2>
+      <p class="hint">Isian awal hanyalah contoh. Pilih jenis acara, lalu ganti teksnya dengan data Anda.</p>
+      <div class="chips" id="types"></div>
+
+      <h2 class="sec">Judul dan pengundang</h2>
+      <div class="field"><label for="f-title">Judul acara</label><input id="f-title" data-k="title" type="text" autocomplete="off"></div>
+      <div class="field"><label for="f-host" id="hostLabel">Nama</label><input id="f-host" data-k="host" type="text" autocomplete="off"></div>
+      <div class="field"><label for="f-opening">Kalimat pembuka</label><textarea id="f-opening" data-k="opening" rows="4"></textarea></div>
+
+      <h2 class="sec">Waktu</h2>
+      <div class="row2">
+        <div class="field"><label for="f-date">Tanggal</label><input id="f-date" data-k="date" type="date"></div>
+        <div class="field"><label for="f-tz">Zona waktu</label>
+          <select id="f-tz" data-k="tz"><option value="WIB">WIB</option><option value="WITA">WITA</option><option value="WIT">WIT</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f-start">Mulai</label><input id="f-start" data-k="start" type="time"></div>
+        <div class="field"><label for="f-end">Selesai (boleh kosong)</label><input id="f-end" data-k="end" type="time"></div>
+      </div>
+
+      <h2 class="sec">Tempat</h2>
+      <div class="field"><label for="f-venue">Nama tempat</label><input id="f-venue" data-k="venue" type="text" autocomplete="off"></div>
+      <div class="field"><label for="f-address">Alamat</label><textarea id="f-address" data-k="address" rows="2"></textarea></div>
+      <div class="field"><label for="f-maps">Tautan Google Maps (boleh kosong)</label><input id="f-maps" data-k="maps" type="text" inputmode="url" placeholder="https://maps.app.goo.gl/..." autocomplete="off"></div>
+
+      <h2 class="sec">Tambahan</h2>
+      <div class="field"><label for="f-dress">Busana (boleh kosong)</label><input id="f-dress" data-k="dress" type="text" placeholder="Contoh: batik atau warna pastel" autocomplete="off"></div>
+      <div class="field"><label for="f-note">Catatan (boleh kosong)</label><input id="f-note" data-k="note" type="text" placeholder="Contoh: mohon hadir 15 menit lebih awal" autocomplete="off"></div>
+      <div class="field"><label for="f-rundown">Rangkaian acara (boleh kosong, satu baris per sesi)</label><textarea id="f-rundown" data-k="rundown" rows="4" placeholder="09.00 Akad nikah&#10;11.00 Resepsi&#10;12.30 Makan siang"></textarea></div>
+      <div class="field"><label for="f-closing">Kalimat penutup</label><textarea id="f-closing" data-k="closing" rows="3"></textarea></div>
+
+      <h2 class="sec">Kontak penyelenggara</h2>
+      <p class="hint">Tamu yang menekan tombol di kartu akan membuka WhatsApp ke nomor ini.</p>
+      <div class="row2">
+        <div class="field"><label for="f-cname">Nama kontak</label><input id="f-cname" data-k="contactName" type="text" autocomplete="off"></div>
+        <div class="field"><label for="f-cphone">Nomor WhatsApp</label><input id="f-cphone" data-k="contactPhone" type="tel" placeholder="0812xxxxxxxx" autocomplete="off"></div>
+      </div>
+
+      <h2 class="sec">Amplop digital (boleh kosong)</h2>
+      <p class="hint">Isi jika ingin menerima tanda kasih. Tamu bisa menyalin nomor rekening dengan satu ketukan. Bagian yang nomornya kosong tidak ditampilkan di kartu.</p>
+      <div class="row2">
+        <div class="field"><label for="f-g1b">Bank atau e-wallet 1</label><input id="f-g1b" data-k="g1b" type="text" placeholder="Contoh: BCA atau DANA" autocomplete="off"></div>
+        <div class="field"><label for="f-g1n">Nomor 1</label><input id="f-g1n" data-k="g1n" type="text" inputmode="numeric" autocomplete="off"></div>
+      </div>
+      <div class="field"><label for="f-g1a">Atas nama 1</label><input id="f-g1a" data-k="g1a" type="text" autocomplete="off"></div>
+      <div class="row2">
+        <div class="field"><label for="f-g2b">Bank atau e-wallet 2</label><input id="f-g2b" data-k="g2b" type="text" placeholder="Contoh: BCA atau DANA" autocomplete="off"></div>
+        <div class="field"><label for="f-g2n">Nomor 2</label><input id="f-g2n" data-k="g2n" type="text" inputmode="numeric" autocomplete="off"></div>
+      </div>
+      <div class="field"><label for="f-g2a">Atas nama 2</label><input id="f-g2a" data-k="g2a" type="text" autocomplete="off"></div>
+      <div class="btnrow"><button type="button" class="btn" id="resetBtn">Kembalikan teks ke contoh jenis ini</button></div>
+    </section>
+
+    <section class="panel" data-panel="tampilan" aria-label="Tampilan kartu">
+      <h2 class="sec">Gaya kartu</h2>
+      <p class="hint">Gaya awal mengikuti jenis acara. Ganti kapan saja.</p>
+      <div class="chips" id="cats"></div>
+      <p class="hint" id="styleCount"></p>
+      <div class="styles" id="styles"></div>
+      <h2 class="sec">Isi kartu</h2>
+      <label class="toggle"><input type="checkbox" id="f-countdown" data-k="countdown"><span>Tampilkan hitung mundur hari</span></label>
+      <p class="hint">Tombol peta dan tombol hubungi penyelenggara muncul di kartu otomatis kalau tautan peta dan nomor WhatsApp sudah diisi.</p>
+      <h2 class="sec">Galeri foto</h2>
+      <p class="hint">Tambahkan foto (pre-wedding, dokumentasi, dan sebagainya). Foto otomatis dikecilkan dan tampil di kartu, dan tamu bisa mengetuknya untuk memperbesar.</p>
+      <div class="btnrow"><label class="btn" for="f-photos">Tambah foto</label><input id="f-photos" type="file" accept="image/*" multiple hidden></div>
+      <p class="hint" id="phCount" style="margin-top:10px"></p>
+      <div class="pgrid" id="pgrid"></div>
+      <h2 class="sec">Musik latar</h2>
+      <p class="hint">Lagu mulai diputar saat tamu menekan Buka undangan, dengan tombol jeda ♪ di pojok layar. Cukup tempel tautan lagu dari YouTube, atau unggah file lagu sendiri.</p>
+      <div class="field"><label for="f-musicurl">Tautan lagu (YouTube atau file mp3)</label><input id="f-musicurl" data-k="musicUrl" type="text" inputmode="url" placeholder="Tempel tautan YouTube di sini" autocomplete="off"></div>
+      <p class="hint" id="musicState"></p>
+      <div class="btnrow"><label class="btn" for="f-music">Atau unggah file lagu</label><input id="f-music" type="file" accept="audio/*" hidden><button type="button" class="btn" id="musicDel">Hapus lagu</button></div>
+      <p class="hint" style="margin-top:10px">Format file: mp3, m4a, ogg, atau wav. Di versi komputer atau hosting, ukuran file tidak dibatasi dan lagu disimpan di server. Di halaman claude.ai, file lagu maksimal 1,5 MB dan tautan YouTube tidak berfungsi. Tidak semua video YouTube mengizinkan disematkan.</p>
+    </section>
+
+    <section class="panel" data-panel="kirim" aria-label="Kirim undangan">
+      <h2 class="sec">Tautan undangan beranimasi</h2>
+      <p class="hint">Tamu hanya melihat kartu beranimasi, tanpa halaman pembuat ini. Di versi server, undangan tersimpan otomatis setiap kali Anda mengubahnya. Di halaman claude.ai, klik Terbitkan setiap kali ada perubahan.</p>
+      <div class="btnrow"><button type="button" class="btn primary" id="pubInv">Terbitkan undangan</button></div>
+      <p class="hint" id="pubState"></p>
+      <div class="field"><label for="linkOut">Tautan untuk semua tamu</label><input id="linkOut" type="text" readonly></div>
+      <div class="btnrow">
+        <button type="button" class="btn" id="copyLink">Salin tautan</button>
+        <a class="btn" id="openLink" href="#" target="_blank" rel="noopener">Coba buka</a>
+      </div>
+      <p class="hint">Atur menu <b>Share</b> halaman ini supaya tamu bisa membukanya.</p>
+      <details class="how">
+        <summary>Cara lain dan pengaturan tautan</summary>
+        <p class="hint" style="margin:10px 0">Kalau tombol Terbitkan tidak jalan: <button type="button" class="btn sm" id="copyData">Salin data undangan</button> lalu tempel di chat Claude dan minta "terbitkan undangan ini". Atau taruh tiga file Starvite di hosting sendiri dan tempel alamatnya di bawah.</p>
+        <div class="field"><label for="f-hosturl">Tautan halaman Starvite</label><input id="f-hosturl" data-k="hostUrl" type="text" inputmode="url" placeholder="https://claude.ai/artifact/..." autocomplete="off"></div>
+      </details>
+
+      <h2 class="sec">Pesan WhatsApp</h2>
+      <p class="hint">Pesan umum untuk grup atau siaran. Untuk tamu satu per satu, pakai daftar di bawah.</p>
+<div class="chat"><div class="bubble"><textarea id="msg" readonly rows="16" aria-label="Pesan WhatsApp"></textarea></div></div>
+      <div class="btnrow">
+        <button type="button" class="btn primary" id="copyMsg">Salin pesan</button>
+        <a class="btn" id="waGeneral" href="https://wa.me/" target="_blank" rel="noopener">Buka di WhatsApp</a>
+      </div>
+
+      <h2 class="sec">Daftar tamu</h2>
+      <p class="hint">Satu tamu per baris. Tambahkan nomor setelah koma, misalnya <em>Pak Hendra, 0812xxxxxxxx</em>, supaya WhatsApp langsung terbuka ke nomornya. Isian awal hanya contoh.</p>
+<textarea id="guests" data-k="guests" rows="5" aria-label="Daftar tamu"></textarea>
+      <p class="prog" id="prog"></p>
+      <ul class="glist" id="guestList"></ul>
+            <p class="hint" style="margin-top:12px">Tombol WhatsApp membuka aplikasi dengan pesan yang sudah terisi. Anda yang menekan kirim, lalu centang tamunya di sini sebagai catatan pribadi.</p>
+    </section>
+
+    <aside class="stage" aria-label="Pratinjau kartu">
+      <div class="stage-head">
+        <label class="lab" for="guestPick">Nama tamu di kartu</label>
+        <select id="guestPick"></select>
+        <input id="guestCustom" type="text" maxlength="80" placeholder="Ketik nama tamu, misalnya Bu Ratna dan keluarga" autocomplete="off" hidden>
+        <div class="btnrow" id="customActs" hidden><button type="button" class="btn sm" id="copyCustomLink">Salin tautan nama ini</button><button type="button" class="btn sm" id="copyCustomMsg">Salin pesan WhatsApp</button></div>
+      </div>
+      <div class="stage-box" id="cardHost"></div>
+      <section class="rsvp" id="cal">
+        <h3 class="rsvp-t">Simpan tanggal acara</h3>
+        <p class="hint" id="calHint"></p>
+        <div class="rsvp-btns"><a class="btn primary" id="calGoogle" href="#" target="_blank" rel="noopener">Google Kalender</a><button type="button" class="btn" id="calIcs">Unduh file kalender (.ics)</button></div>
+      </section>
+      <div class="btnrow"><button type="button" class="btn sm" id="replay">Putar ulang animasi</button></div>
+      <p class="stage-note">Untuk membagikan kartu sebagai gambar, ambil tangkapan layar. Versi aplikasi: v3.8 (rundown, nama tamu custom, musik latar).</p>
+    </aside>
+  </main>
+</div>
+<div class="g-ribbon" id="gRibbon" hidden>Anda tamu undangan</div>
+<div class="intro" id="intro" hidden aria-hidden="true">
+  <div class="intro-in">
+    <div class="intro-orb"><i class="ring"></i><i class="sat"></i></div>
+    <div class="intro-word"><span>S</span><span>t</span><span>a</span><span>r</span><span>v</span><span>i</span><span>t</span><span>e</span></div>
+    <p class="intro-tag">Undangan digital untuk semua acara</p>
+    <div class="intro-bar"><b></b></div>
+  </div>
+</div>
+<div class="cover" id="cover" hidden>
+  <div class="cover-in">
+    <p class="cv-eyebrow">Anda diundang</p>
+    <h1 class="cv-title" id="cvTitle"></h1>
+    <p class="cv-to">Kepada Yth.</p>
+    <p class="cv-name" id="cvName"></p>
+    <button type="button" class="btn primary" id="openInv">Buka undangan</button>
+  </div>
+</div>
+<div class="lb" id="lb" hidden><button type="button" class="lb-b lb-x" data-lb="x" aria-label="Tutup">×</button><button type="button" class="lb-b lb-p" data-lb="p" aria-label="Foto sebelumnya">‹</button><img id="lbImg" alt=""><button type="button" class="lb-b lb-n" data-lb="n" aria-label="Foto berikutnya">›</button></div>
+<button type="button" class="mp" id="mpBtn" hidden aria-label="Putar atau jeda musik" title="Musik"><span>♪</span></button><audio id="mpAudio" loop preload="none"></audio>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script id="inv-data" type="application/json">null</script>
+<script src="app.js"></script>
+
+</body></html>

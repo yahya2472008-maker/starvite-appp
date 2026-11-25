@@ -1,0 +1,8 @@
+{
+  "name": "starvite-server",
+  "version": "2.0.0",
+  "description": "Back end Starvite: menyimpan undangan dan melayani tautan tamu pendek",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=22.13" }
+}
